@@ -7,22 +7,22 @@ USERS = []          # lecteurs
 EMPRUNTS = []       # (id_livre, lecteur, date_debut, date_retour)
 
 class Livre:
-    # x1: titre, y2: auteur, z3: identifiant
-    def __init__(self, x1, y2, z3=None, dispo=True, pages=0, tags=None, meta={}):
+    # x1: titre, y2: auteur, id: identifiant
+    def __init__(self, x1, y2, id=None, dispo=True, pages=0, tags=None, meta={}):
         self.x1 = x1
         self.y2 = y2
-        self.z3 = z3 if z3 else str(hash(x1+y2))[-6:]
+        self.id = id if id else str(hash(x1+y2))[-6:]
         self.t = dispo          # disponibilité
-        self.b = pages          # nb pages
-        self.tag = tags or []   # tags
+        self.pages = pages          # nb pages
+        self.tags = tags or []   # tags
         self.meta = meta        # dict mutable par défaut (mauvaise pratique)
         self.u = None           # lecteur courant (mauvais SRP)
         self._ret = None        # date retour prévue
         self._frais = 0.0
-        self.hist = []          # historique texte (mélangé au domaine)
+        self.historique = []          # historique texte (mélangé au domaine)
 
     def __repr__(self):
-        return f"Livre<{self.z3}:{self.x1}>"
+        return f"Livre<{self.id}:{self.x1}>"
 
     # --- Duplications & noms obscurs ---
     def dispo(self):
@@ -71,7 +71,7 @@ class Livre:
             USERS.append(lecteur)
         d = datetime.datetime.now()
         self._ret = d + datetime.timedelta(days=jours)
-        EMPRUNTS.append((self.z3, lecteur, d, self._ret))
+        EMPRUNTS.append((self.id, lecteur, d, self._ret))
         self.hist.append(f"EMPRUNT {lecteur} -> {d} ret {self._ret}")
         return True
 
@@ -93,13 +93,13 @@ class Livre:
         self.u = None
         # nettoie l’état global (couplage)
         global EMPRUNTS
-        EMPRUNTS = [e for e in EMPRUNTS if e[0] != self.z3]
+        EMPRUNTS = [e for e in EMPRUNTS if e[0] != self.id]
         self.hist.append(f"RETOUR -> {now} retard={retard} amende={am}")
         return am
 
     # --- Présentation (I/O) mêlée au domaine ---
     def afficher(self):
-        txt = f"[{self.z3}] {self.x1} - {self.y2}"
+        txt = f"[{self.id}] {self.x1} - {self.y2}"
         if not self.t:
             txt += f" (EMPRUNTÉ par {self.u} jusqu'au {self._ret})"
         else:
