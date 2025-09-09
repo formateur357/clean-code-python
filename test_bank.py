@@ -7,18 +7,18 @@ import pytest
 def account():
     return BankAccount()
 
-def test_new_account_has_zero_balance():
+def test_new_account_has_zero_balance(account):
     assert account.balance == 0
 
-def test_deposit_increase_balance():
+def test_deposit_increase_balance(account):
     account.deposite(100)
     assert account.balance == 100
 
-def test_withdraw_decreases_balance():
+def test_withdraw_decreases_balance(account):
     account.deposite(100)
     account.withdraw(40)
     assert account.balance == 60
 
-def test_withdraw_cannot_go_negative():
+def test_withdraw_cannot_go_negative(account):
     with pytest.raises(ValueError):
         account.withdraw(20)
