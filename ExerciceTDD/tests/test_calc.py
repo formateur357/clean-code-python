@@ -1,7 +1,6 @@
 from src import calc
 import pytest
 
-
 def test_add_two_numbers():
     assert calc.add(2, 3) == 5
     assert calc.add(-1, 4) == 3
@@ -9,7 +8,6 @@ def test_add_two_numbers():
 def test_sub_two_numbers():
     assert calc.sub(10, 3) == 7
     assert calc.sub(3, 10) == -7
-
 
 
 def test_apply_rate_basic(default_rate):

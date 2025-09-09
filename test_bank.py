@@ -7,6 +7,11 @@ import pytest
 def account():
     return BankAccount()
 
+@pytest.mark.parametrize("amount", [10, 50, 200])
+def test_multiple_deposits(account, amount):
+    account.deposite(amount)
+    assert account.balance == amount
+
 def test_new_account_has_zero_balance(account):
     assert account.balance == 0
 

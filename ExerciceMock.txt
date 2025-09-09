@@ -1,0 +1,52 @@
+Vous développez une mini-application de gestion d’utilisateurs.
+
+Le UserService dépend de trois services externes :
+1. UserRepository → gère la persistance des utilisateurs
+2. NotificationService → envoie des emails
+3. AuditLogger → journalise les actions
+
+Ces dépendances ne doivent PAS être réellement utilisées.
+Elles seront remplacées par des mocks dans les tests.
+
+---------------------------------------------------------
+Étape 1 — Enregistrement d’un utilisateur
+Implémentez une méthode UserService.register(email) qui :
+- Vérifie que l’email contient bien un “@”
+- Si invalide → lève ValueError et log une erreur
+- Sauvegarde un nouvel utilisateur actif via repo.save(user)
+- Envoie un email de bienvenue via notifier.send(email, subject, body)
+- Journalise l’action via logger.info(...)
+
+À tester :
+- repo.save est appelé une seule fois avec un User actif
+- notifier.send est appelé avec subject = "Welcome!" et un body contenant “Bienvenue”
+- logger.info est appelé
+- En cas d’email invalide : aucune dépendance appelée et ValueError levée
+
+---------------------------------------------------------
+Étape 2 — Réinitialisation du mot de passe
+Implémentez une méthode UserService.reset_password(email) qui :
+- Cherche l’utilisateur via repo.get_by_email(email)
+- Si aucun trouvé → lève LookupError et log une erreur
+- Sinon :
+    - génère un token (exemple : "reset123")
+    - assigne ce token à l’utilisateur
+    - sauvegarde l’utilisateur avec repo.save(user)
+    - envoie un email avec le token dans le body via notifier.send(...)
+    - journalise l’action via logger.info(...)
+
+À tester :
+- Cas normal → repo.save et notifier.send appelés, token bien présent
+- Cas utilisateur introuvable → LookupError levée, aucun appel à save ni send
+
+---------------------------------------------------------
+Étape 3 — Bonus (si temps disponible)
+- Utiliser patch pour remplacer NotificationService directement dans le module
+- Vérifier l’ordre des appels (repo.save avant notifier.send)
+- Simuler une exception côté repo.save avec side_effect pour tester logger.error
+
+---------------------------------------------------------
+Contraintes :
+- Respectez le cycle TDD : écrire le test en premier, puis le code minimal
+- Utilisez pytest et unittest.mock (MagicMock, patch, side_effect)
+- Vérifiez les interactions avec assert_called, assert_not_called, assert_called_once_with
