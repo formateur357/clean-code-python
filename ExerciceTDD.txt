@@ -1,34 +1,67 @@
-Exercice 1 — Opérations de base (10–15 min)
+Atelier TDD avec pytest — Série de 3 exercices (≈ 45 min)
 
+Objectifs
+----------------------
+- Pratiquer le cycle RED → GREEN → REFACTOR.
+- Utiliser les fixtures pytest :
+  - Before All : @pytest.fixture(scope="session")
+  - Before Each : @pytest.fixture (scope par défaut).
+- Écrire des tests simples et lisibles avant le code.
+- Séparer logique et I/O (pas de print dans le domaine).
+
+Règles générales
+----------------
+1. Écrire les tests d’abord (fichier tests/test_calc.py), exécuter pytest, constater l’échec (RED).
+2. Implémenter le minimum dans src/calc.py pour faire passer les tests (GREEN).
+3. Nettoyer si nécessaire (renommage, petites refactors) sans casser les tests (REFACTOR).
+4. Pas d’I/O dans les fonctions métiers. Pas de variables globales.
+
+Exercice 1 — Opérations de base (10–15 min)
+-------------------------------------------
 But : créer deux fonctions pures dans calc.py.
 
 - add(x, y) -> number : renvoie la somme de x et y.
-
 - sub(x, y) -> number : renvoie x - y.
 
 À tester :
-
 - Cas simples positifs/négatifs.
-
 - Cas de base (zéro).
 
-- Tests lisibles, assertions directes.
+Critères de réussite :
+- Fonctions pures, pas d’effets de bord.
+- Noms explicites, code court.
 
-Exemple de tests attendus :
+Exercice 2 — Application d’un taux (10–15 min)
+----------------------------------------------
+But : créer une fonction avec validation d’entrée et utilisation de la fixture Before All.
 
-    from src import calc
+- apply_rate(amount: float, rate: float) -> float
+  Multiplie amount par rate et arrondit à 2 décimales.
 
-    def test_add_two_numbers():
-        assert calc.add(2, 3) == 5
-        assert calc.add(-1, 4) == 3
-
-    def test_sub_two_numbers():
-        assert calc.sub(10, 3) == 7
-        assert calc.sub(3, 10) == -7
-
+Contraintes :
+- rate doit être strictement positif (> 0) → sinon ValueError.
+- Utiliser le default_rate fourni par la fixture de session dans au moins un test.
 
 Critères de réussite :
+- Validation claire des entrées.
+- Arrondi à 2 décimales (round(x, 2)).
+- Tests lisibles et indépendants.
 
-- Fonctions pures, pas d’effets de bord.
+Exercice 3 — Compteur simple (15–20 min)
+----------------------------------------
+But : concevoir une petite classe avec état, testée via la fixture Before Each.
 
-- Noms explicites, code court.
+- Classe Counter(start: int = 0) :
+  - Propriété en lecture seule value.
+  - Méthode increment() : +1.
+  - Méthode reset() : remet value à start.
+
+Critères de réussite :
+- État isolé à chaque test (usage de la fixture start_value).
+- API minimale, claire, sans variables globales.
+
+Conseils
+--------
+- Faites passer un test à la fois.
+- En cas d’échec, lisez le message d’erreur, corrigez au plus près.
+- Gardez vos tests rapides et sans dépendances externes.
