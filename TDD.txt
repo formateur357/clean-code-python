@@ -1,0 +1,15 @@
+TDD Pour Test Driven Development
+
+Cycle Red - Green - Refactor
+
+1. Red : écrire un test qui échoue.
+2. Green : écrire le code minimal pour réussir le test.
+3. Refactor : améliore le code sans casser les tests.
+
+Acronyme FIRST
+
+Fast -> rapide
+Independent -> indépendants
+Repeatable -> toujours les mêmes résultats
+Self-Validating -> succès ou échec clair
+Timely -> écrits avant le code
