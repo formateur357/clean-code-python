@@ -1,0 +1,39 @@
+Exercice — Calcul de frais d’expédition
+
+🎯 Objectif
+
+Modéliser un calcul de total de commande avec options d’expédition, en BDD (Gherkin + Behave) avec Plan du Scénario, puis écrire l’équivalent en tests Pytest paramétrés.
+
+🧾 Règles métier
+
+Sous-total (en €) est donné.
+
+Frais de port standard:
+
+5 € si sous_total < 50
+
+0 € si sous_total ≥ 50
+
+Option express: ajoute 10 € (toujours, même si port gratuit).
+
+Option fragile: ajoute 2 €.
+
+Total = sous_total + port + express + fragile.
+
+📂 Arborescence attendue
+projet_bdd_shipping/
+├── src/
+│   └── shipping.py
+├── features/
+│   ├── shipping.feature
+
+└── tests/
+    └── test_shipping_pytest.py
+
+✍️ Énoncé (à donner)
+
+Écrire la feature Gherkin avec un Plan du Scénario permettant de tester plusieurs combinaisons (sous_total, express, fragile, total_attendu).
+
+Implémenter la fonction calc_total(sous_total, express, fragile) dans src/shipping.py.
+
+Écrire l’équivalent en Pytest avec un test paramétré reproduisant les mêmes cas.
