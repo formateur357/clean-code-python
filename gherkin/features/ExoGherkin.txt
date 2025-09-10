@@ -1,0 +1,28 @@
+Contexte métier
+
+Vous travaillez sur un site e-commerce permettant aux clients de gérer un panier.
+Le métier vous donne les règles suivantes :
+
+“Un client peut ajouter un produit dans son panier.”
+
+“Un client peut retirer un produit de son panier.”
+
+“Le panier calcule automatiquement le total.”
+
+“Si le panier est vide, le total est de 0.”
+
+Consignes
+
+Écrivez une Fonctionnalité en Gherkin décrivant la gestion du panier.
+
+Ajoutez un Contexte commun si possible (ex. un panier initialisé).
+
+Rédigez un scénario par règle métier.
+
+Vérifiez vos scénarios avec cette checklist :
+
+✔ Compréhensible par un non-développeur.
+
+✔ Pas plus de 3–7 étapes.
+
+✔ Pas de détails techniques (ex. pas de “clic sur bouton”).
